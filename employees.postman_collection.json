@@ -1,8 +1,8 @@
 {
   "info": {
     "name": "Employees API",
-    "_postman_id": "e5e8c8b7-6d22-4f6f-83af-8f3b0b12a001",
-    "description": "Коллекция запросов для API управления сотрудниками",
+    "_postman_id": "b12e7d2f-6f58-4bfa-bf9b-8f3a1d7e9a00",
+    "description": "Полная коллекция запросов к API управления сотрудниками на https://shutenkoadmin.ru",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -112,7 +112,11 @@
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://127.0.0.1:5000"
+      "value": "https://shutenkoadmin.ru"
+    },
+    {
+      "key": "employeeId",
+      "value": "1"
     }
   ]
 }
