@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ru" class="swagger-page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список сотрудников</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@4/swagger-ui.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="192x192" href="favicon/web-app-manifest-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="favicon/web-app-manifest-512x512.png">
+
+    <style>
+        /* Общий класс для изоляции стилей - чтобы эти стили не применялись к другим элементам страницы */
+        .swagger-page body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Градиентный фон страницы */
+            margin: 0; /* Убирает стандартные отступы браузера */
+            padding: 70px 0 0 0; /* Убирает стандартные внутренние отступы */
+            min-height: 100vh; /* Минимальная высота равна высоте окна браузера */
+            font-family: 'Roboto', sans-serif; /* Шрифт для всей страницы */
+            color: #2c3e50; /* Основной цвет текста */
+            line-height: 1; /* Межстрочный интервал */
+        }
+
+        .swagger-page .контейнер {
+            max-width: 1500px; /* Максимальная ширина контейнера */
+            margin: 0 auto; /* Выравнивание по центру */
+            padding: 30px 40px; /* Внутренние отступы */
+            background: #ffffff; /* Белый фон контейнера */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Тень вокруг контейнера */
+            border-radius: 50px; /* Закругление углов */
+            margin-top: 200px; /* Отступ сверху для навигации */
+            margin-bottom: 40px; /* Отступ снизу */
+            box-sizing: border-box; /* Padding включается в ширину */
+            width: calc(100% - 40px); /* Адаптивная ширина */
+        }
+
+        .swagger-page nav.навигация {
+            position: fixed; /* Фиксированное позиционирование */
+            top: 0; /* Прикрепляем к верху */
+            left: 0; /* Прикрепляем к левому краю */
+            right: 0; /* Прикрепляем к правому краю */
+            background: linear-gradient(90deg, #2c3e50, #3498db); /* Градиентный фон навигации */
+            padding: 20px 0; /* Отступы сверху и снизу */
+            z-index: 1000; /* Поверх других элементов */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Тень под навигацией */
+            display: flex; /* Flex-контейнер */
+            justify-content: center; /* Выравнивание по центру */
+            align-items: center; /* Выравнивание по вертикали */
+        }
+
+        .swagger-page .ссылка-навигации {
+            font-family: 'Roboto', sans-serif; /* Шрифт для ссылок */
+            color: #ffffff; /* Белый цвет текста */
+            text-decoration: none; /* Убираем подчеркивание */
+            margin: 0 20px; /* Отступы между ссылками */
+            font-size: 1.5em; /* Размер шрифта */
+            font-weight: 500; /* Жирность шрифта */
+            transition: color 0.3s ease, transform 0.2s ease; /* Плавные переходы */
+            position: relative; /* Для псевдоэлемента */
+        }
+
+            .swagger-page .ссылка-навигации:hover {
+                color: #f1c40f; /* Цвет при наведении */
+                transform: translateY(-2px); /* Поднимаем ссылку */
+            }
+
+            .swagger-page .ссылка-навигации::after {
+                content: ''; /* Псевдоэлемент для подчеркивания */
+                position: absolute; /* Абсолютное позиционирование */
+                width: 0; /* Начальная ширина */
+                height: 2px; /* Высота линии */
+                bottom: -5px; /* Позиционирование снизу */
+                left: 50%; /* Начало с центра */
+                background: #f1c40f; /* Цвет линии */
+                transition: width 0.3s ease, left 0.3s ease; /* Плавные переходы */
+            }
+
+            .swagger-page .ссылка-навигации:hover::after {
+                width: 100%; /* Полная ширина */
+                left: 0; /* Сдвигаем в начало */
+            }
+
+        .swagger-page .заголовок {
+            font-size: 1.5em; /* Размер шрифта */
+            color: #2c3e50; /* Цвет текста */
+            text-align: center; /* Выравнивание по центру */
+            margin-bottom: 30px; /* Отступ снизу */
+            font-weight: 700; /* Жирный шрифт */
+            letter-spacing: 1px; /* Межбуквенное расстояние */
+            text-transform: uppercase; /* Заглавные буквы */
+            word-break: break-word; /* Перенос длинных слов */
+        }
+
+        .swagger-page .кнопка {
+            background: linear-gradient(90deg, #3498db, #2980b9); /* Градиентный фон */
+            color: #ffffff; /* Белый текст */
+            padding: 10px 20px; /* Отступы внутри */
+            border: none; /* Без границы */
+            border-radius: 25px; /* Закругленные углы */
+            cursor: pointer; /* Указатель при наведении */
+            font-size: 0.8em; /* Размер шрифта */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+        }
+
+            .swagger-page .кнопка:hover {
+                transform: scale(1.05); /* Увеличение при наведении */
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4); /* Тень при наведении */
+            }
+
+        .swagger-page .кнопка-удаления {
+            background: linear-gradient(90deg, #e74c3c, #c0392b); /* Красный градиент */
+            color: #ffffff; /* Белый текст */
+            padding: 8px 15px; /* Отступы внутри */
+            border: none; /* Без границы */
+            border-radius: 20px; /* Закругленные углы */
+            cursor: pointer; /* Указатель при наведении */
+            font-size: 1em; /* Размер шрифта */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+        }
+
+            .swagger-page .кнопка-удаления:hover {
+                transform: scale(1.05); /* Увеличение при наведении */
+                box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4); /* Тень при наведении */
+            }
+
+        .swagger-page .список-пользователей {
+            list-style: none; /* Убираем маркеры списка */
+            padding: 0; /* Убираем отступы */
+        }
+
+        .swagger-page .элемент-списка {
+            background: #ffffff; /* Белый фон */
+            padding: 12px 20px; /* Отступы внутри */
+            margin: 20px 0; /* Отступы между элементами */
+            border-radius: 10px; /* Закругленные углы */
+            display: flex; /* Flex-контейнер */
+            justify-content: space-between; /* Распределение пространства */
+            align-items: center; /* Выравнивание по вертикали */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Тень */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+        }
+
+            .swagger-page .элемент-списка:hover {
+                transform: translateY(-2px); /* Поднимаем элемент */
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Усиливаем тень */
+            }
+
+        .swagger-page .информация-пользователя {
+            display: flex; /* Flex-контейнер */
+            flex-direction: column; /* Вертикальное направление */
+            gap: 5px; /* Расстояние между элементами */
+        }
+
+            .swagger-page .информация-пользователя strong {
+                color: #2c3e50; /* Цвет заголовка */
+                font-size: 1.1em; /* Размер шрифта */
+            }
+
+            .swagger-page .информация-пользователя span {
+                color: #7f8c8d; /* Цвет дополнительного текста */
+                font-size: 0.9em; /* Размер шрифта */
+            }
+
+        .swagger-page .кнопки-действий {
+            display: flex; /* Flex-контейнер */
+            gap: 10px; /* Расстояние между кнопками */
+        }
+
+        .swagger-page .форма-добавления {
+            background: #f8f9fa; /* Светлый фон */
+            padding: 20px; /* Отступы внутри */
+            border-radius: 15px; /* Закругленные углы */
+            margin-bottom: 30px; /* Отступ снизу */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Тень */
+        }
+
+        .swagger-page .группа-полей {
+            margin-bottom: 15px; /* Отступ между группами полей */
+        }
+
+        .swagger-page .метка {
+            display: block; /* Блочный элемент */
+            margin-bottom: 5px; /* Отступ снизу */
+            color: #2c3e50; /* Цвет текста */
+            font-weight: 500; /* Жирность шрифта */
+        }
+
+        .swagger-page .поле-ввода {
+            width: 100%; /* Ширина 100% */
+            padding: 10px 15px; /* Отступы внутри */
+            border: 2px solid #e0e6ed; /* Граница */
+            border-radius: 8px; /* Закругленные углы */
+            font-size: 1em; /* Размер шрифта */
+            transition: border-color 0.3s ease; /* Плавный переход для границы */
+            box-sizing: border-box; /* Padding включается в ширину */
+        }
+
+            .swagger-page .поле-ввода:focus {
+                outline: none; /* Убираем стандартный контур */
+                border-color: #3498db; /* Цвет границы при фокусе */
+                box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1); /* Свечение при фокусе */
+            }
+
+        .swagger-page .сообщение-статуса {
+            padding: 15px; /* Отступы внутри */
+            margin: 20px 0; /* Отступы сверху и снизу */
+            border-radius: 8px; /* Закругленные углы */
+            text-align: center; /* Выравнивание по центру */
+            font-weight: 500; /* Жирность шрифта */
+        }
+
+        .swagger-page .успех {
+            background: #d4edda; /* Зеленый фон */
+            color: #155724; /* Зеленый текст */
+            border: 1px solid #c3e6cb; /* Зеленая граница */
+        }
+
+        .swagger-page .ошибка {
+            background: #f8d7da; /* Красный фон */
+            color: #721c24; /* Красный текст */
+            border: 1px solid #f5c6cb; /* Красная граница */
+        }
+
+        .swagger-page .загрузка {
+            background: #d1ecf1; /* Голубой фон */
+            color: #0c5460; /* Синий текст */
+            border: 1px solid #bee5eb; /* Голубая граница */
+        }
+
+        .swagger-page .пустой-список {
+            text-align: center; /* Выравнивание по центру */
+            color: #7f8c8d; /* Серый текст */
+            font-style: italic; /* Курсив */
+            padding: 40px; /* Отступы внутри */
+            background: #f8f9fa; /* Светлый фон */
+            border-radius: 15px; /* Закругленные углы */
+            margin: 20px 0; /* Отступы сверху и снизу */
+        }
+
+        .swagger-page .логотип {
+            position: absolute; /* Абсолютное позиционирование */
+            top: 15px; /* Отступ сверху */
+            left: 30px; /* Отступ слева */
+            font-size: 1.8em; /* Размер шрифта */
+            font-weight: bold; /* Жирный шрифт */
+            color: #ffffff; /* Белый текст */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Тень текста */
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .swagger-page .контейнер {
+                padding: 20px; /* Меньшие отступы */
+                margin: 80px 20px 20px; /* Измененные отступы */
+                width: calc(100% - 40px); /* Адаптивная ширина */
+            }
+
+            .swagger-page .ссылка-навигации {
+                font-size: 1.2em; /* Меньший размер шрифта */
+                margin: 0 10px; /* Меньшие отступы */
+            }
+
+            .swagger-page .элемент-списка {
+                flex-direction: column; /* Вертикальное направление */
+                align-items: flex-start; /* Выравнивание по левому краю */
+                gap: 15px; /* Расстояние между элементами */
+            }
+
+            .swagger-page .кнопки-действий {
+                align-self: stretch; /* Растягиваем на всю ширину */
+                justify-content: space-between; /* Равномерное распределение */
+            }
+
+            .swagger-page .кнопка,
+            .swagger-page .кнопка-удаления {
+                flex: 1; /* Равная ширина */
+                text-align: center; /* Выравнивание текста по центру */
+            }
+
+            .swagger-page .логотип {
+                position: static; /* Обычное позиционирование */
+                text-align: center; /* Выравнивание по центру */
+                margin-bottom: 10px; /* Отступ снизу */
+                font-size: 1.5em; /* Размер шрифта */
+            }
+
+            .swagger-page nav.навигация {
+                flex-direction: column; /* Вертикальное направление */
+                padding: 15px 0; /* Отступы сверху и снизу */
+            }
+        }
+    </style>
+
+</head>
+<body class="swagger-page">
+    <nav class="навигация">
+        <div class="логотип">ShutenkoAdmin</div>
+        <a href="/" class="ссылка-навигации">Главная</a>
+        <a href="/admin" class="ссылка-навигации">Админка</a>
+        <a href="/swagger" class="ссылка-навигации">Swagger</a>
+    </nav>
+
+    <div class="контейнер">
+        <h1 class="заголовок">Список сотрудников</h1>
+
+        <!-- <div class="форма-добавления">
+            <h3 style="margin-top: 0; color: #2c3e50;">Добавить нового сотрудника</h3>
+            <form id="employeeForm">
+                <div class="группа-полей">
+                    <label class="метка" for="name">Имя:</label>
+                    <input class="поле-ввода" type="text" id="name" name="name" required>
+                </div>
+                <div class="группа-полей">
+                    <label class="метка" for="surname">Фамилия:</label>
+                    <input class="поле-ввода" type="text" id="surname" name="surname" required>
+                </div>
+                <div class="группа-полей">
+                    <label class="метка" for="position">Должность:</label>
+                    <input class="поле-ввода" type="text" id="position" name="position" required>
+                </div>
+                <button class="кнопка" type="submit">Добавить сотрудника</button>
+            </form>
+        </div> -->
+
+        <div id="statusMessage" class="сообщение-статуса" style="display: none;"></div>
+
+        <!-- <h2 style="color: #2c3e50; margin-bottom: 20px;">Список сотрудников</h2> -->
+        <ul class="список-пользователей" id="employeeList">
+            <!-- Список сотрудников будет загружен здесь -->
+        </ul>
+
+        <!-- <div style="text-align: center; margin-top: 30px;">
+               <button class="кнопка-удаления" onclick="deleteAllEmployees()">Удалить всех сотрудников</button>
+           </div> -->
+    </div>
+
+    <script>
+        // Функция для отображения сообщения
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('statusMessage');
+            messageDiv.textContent = message;
+            messageDiv.className = 'сообщение-статуса ' + type;
+            messageDiv.style.display = 'block';
+
+            // Скрыть сообщение через 5 секунд
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Функция для загрузки списка сотрудников
+        async function loadEmployees() {
+            try {
+                const response = await fetch('/api/employees');
+                if (!response.ok) {
+                    throw new Error('Ошибка загрузки данных');
+                }
+                const employees = await response.json();
+                const list = document.getElementById('employeeList');
+
+                if (employees.length === 0) {
+                    list.innerHTML = '<div class="пустой-список">Список сотрудников пуст</div>';
+                    return;
+                }
+
+                list.innerHTML = '';
+                employees.forEach(employee => {
+                    const li = document.createElement('li');
+                    li.className = 'элемент-списка';
+                    li.innerHTML = `
+                                <div class="информация-пользователя">
+                                    <strong>${employee.name} ${employee.surname}</strong>
+                                    <span>Должность: ${employee.position}</span>
+                                    <span>ID: ${employee.id}</span>
+                                </div>
+                                <div class="кнопки-действий">
+                                    <button class="кнопка-удаления" onclick="deleteEmployee(${employee.id})">Удалить</button>
+                                </div>
+                            `;
+                    list.appendChild(li);
+                });
+            } catch (error) {
+                showMessage('Ошибка загрузки списка сотрудников: ' + error.message, 'ошибка');
+            }
+        }
+
+        // Функция для добавления сотрудника
+        async function addEmployee(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const employee = {
+                name: formData.get('name'),
+                surname: formData.get('surname'),
+                position: formData.get('position')
+            };
+
+            try {
+                const response = await fetch('/api/employees', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(employee)
+                });
+
+                if (response.ok) {
+                    showMessage('Сотрудник успешно добавлен', 'успех');
+                    event.target.reset();
+                    loadEmployees();
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Ошибка добавления сотрудника');
+                }
+            } catch (error) {
+                showMessage('Ошибка добавления сотрудника: ' + error.message, 'ошибка');
+            }
+        }
+
+        // Функция для удаления сотрудника
+        async function deleteEmployee(id) {
+            if (!confirm('Вы уверены, что хотите удалить этого сотрудника?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/employees/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showMessage('Сотрудник успешно удален', 'успех');
+                    loadEmployees();
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Ошибка удаления сотрудника');
+                }
+            } catch (error) {
+                showMessage('Ошибка удаления сотрудника: ' + error.message, 'ошибка');
+            }
+        }
+
+        // Функция для удаления всех сотрудников
+        async function deleteAllEmployees() {
+            if (!confirm('ВЫ УВЕРЕНЫ, ЧТО ХОТИТЕ УДАЛИТЬ ВСЕХ СОТРУДНИКОВ? Это действие нельзя отменить.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/employees', {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showMessage('Все сотрудники успешно удалены', 'успех');
+                    loadEmployees();
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Ошибка удаления сотрудников');
+                }
+            } catch (error) {
+                showMessage('Ошибка удаления сотрудников: ' + error.message, 'ошибка');
+            }
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function () {
+            loadEmployees();
+            document.getElementById('employeeForm').addEventListener('submit', addEmployee);
+        });
+    </script>
+</body>
+</html>
