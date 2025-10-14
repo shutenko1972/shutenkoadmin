@@ -2,17 +2,12 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Копируем файлы приложения
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-# Устанавливаем зависимости
-RUN pip install --no-cache-dir flask flask-sqlalchemy flasgger
-
-# Создаем папку для базы данных
-RUN mkdir -p instance
-
-# Открываем порт
 EXPOSE 5000
 
-# Запускаем приложение
-CMD ["python", "app.py"]
+# Р—Р°РїСѓСЃРєР°РµРј С‡РµСЂРµР· run.py РІРјРµСЃС‚Рѕ app.py
+CMD ["python", "run.py"]
